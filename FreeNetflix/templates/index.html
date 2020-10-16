@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% block content %}
+<section class="text-gray-500 bg-gray-900 body-font relative">
+    <div class="container px-5 py-16 mx-auto">
+        <div class="flex flex-col text-center w-full mb-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class=flashes>
+                    {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4" style="color: rgb(229,9,20);">FREE NETFLIX</h1>
+            <div class="w-full justify-center flex flex-row">
+                <span class="mr-8"><input type="radio" id="series" name="admin" value="series" class="bg-gray-900 mr-4" onclick="seriesFormDisplay()">Upload New Series</span>
+                <span><input type="radio" id="episode" name="admin" value="episode" class="bg-gray-900 mr-4" onclick="episodeFormDisplay()">Upload New Episode</span><br>
+            </div>
+        </div>
+        <!--UPLOAD NEW SERIES-->
+        <div class="lg:w-1/2 md:w-2/3 mx-auto" id="formA">
+            <form class="flex flex-wrap -m-2" method="POST" action="/series" enctype="multipart/form-data">
+                <div class="p-2 w-1/2">
+                    <select name ="category" class="bg-gray-800 border border-gray-700 text-white focus:border-indigo-500 text-base block appearance-none w-full hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        <option>EnglishSeries</option>
+                        <option>HindiSeries</option>
+                        <option>Horror</option>
+                        <option>Romantic</option>
+                        <option>Scifi</option>
+                        <option>Action</option>
+                        <option>others</option>
+                    </select>
+                </div>
+                <div class="p-2 w-1/2">
+                    <input class="w-full bg-gray-800 rounded border border-gray-700 text-white focus:outline-none focus:border-indigo-500 text-base px-4 py-2" placeholder="Series" type="text" name="Series">
+                </div>
+                <div class="p-2 w-full">
+                    <button class="flex mx-auto text-white border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" style="background-color: rgb(229,9,20);" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <!--END UPLOAD NEW SERIES-->
+
+        <!--UPLOAD NEW EPISODE-->
+        <div class="lg:w-1/2 md:w-2/3 mx-auto" id="formB">
+            <form class="flex flex-wrap -m-2" method="POST" action="/episode" enctype="multipart/form-data">
+                <div class="p-2 w-1/2">
+                    <select name="category" class="bg-gray-800 border border-gray-700 text-white focus:border-indigo-500 text-base block appearance-none w-full hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        <option>EnglishSeries</option>
+                        <option>HindiSeries</option>
+                        <option>Horror</option>
+                        <option>Romantic</option>
+                        <option>Scifi</option>
+                        <option>Action</option>
+                        <option>others</option>
+                    </select>
+                </div>
+                <div class="p-2 w-1/2">
+                    <input class="w-full bg-gray-800 rounded border border-gray-700 text-white focus:outline-none focus:border-indigo-500 text-base px-4 py-2" placeholder="Series" type="text" name="series">
+                </div>
+                <div class="p-2 w-full">
+                    <input class="w-full bg-gray-800 rounded border border-gray-700 text-white focus:outline-none focus:border-indigo-500 text-base px-4 py-2" placeholder="Season" type="text" name="season">
+                </div>
+                <div class="p-2 w-full">
+                    <input class="w-full bg-gray-800 rounded border border-gray-700 text-white focus:outline-none focus:border-indigo-500 text-base px-4 py-2" placeholder="Title" type="text" name="title">
+                </div>
+                <div class="p-2 w-full">
+                    <input class="w-full bg-gray-800 rounded border border-gray-700 text-white focus:outline-none focus:border-indigo-500 text-base px-4 py-2" placeholder="Mega Link" type="text" name="mega_link">
+                </div>
+                <div class="p-2 w-full">
+                    <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" style="background-color: rgb(229,9,20);" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <!--END UPLOAD NEW EPISODE-->
+    </div>
+</section>
+{% endblock %}
+        

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Free Netflix</title>
+        <link rel="icon" href="../static/favicon.jpeg">
+        <!--TAILWIND CSS-->
+        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-900">
+        <!--HEADER-->
+        <header class="text-gray-500 bg-gray-900 body-font">
+            <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+                <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+                    <img src="../static/netflix-logo-png-2562.png" class="w-32 h-12 p-2">
+                </a>
+            </div>
+        </header>
+        <!--HEADER END-->
+        {% block content %}{% endblock %}
+        <script>
+            let series = document.getElementById('series');
+            let episode = document.getElementById('episode');
+            let formA = document.getElementById('formA');
+            let formB = document.getElementById('formB');
+            window.addEventListener('load', () => {
+                formA.style.display = 'none';
+                formB.style.display = "none";
+            })
+            series.addEventListener('click',() => {
+                formA.style.display = 'block';
+                formB.style.display = "none";
+            });
+            episode.addEventListener('click',() => {
+                formA.style.display = 'none';
+                formB.style.display = "block";
+            });
+        </script>
+    </body>
+</html>
