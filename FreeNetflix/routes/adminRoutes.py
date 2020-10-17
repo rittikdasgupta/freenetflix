@@ -2,19 +2,19 @@ import requests
 import uuid
 import re  # for case insensitive matching in mongodb
 from flask import Flask, Blueprint,render_template, request, flash, jsonify, url_for, redirect
-from flask_cors import cross_origin
+import flask_cors
 from FreeNetflix.creds import db
 from .find_movies import operations
 admin = Blueprint("admin",__name__)
+flask_cors.CORS(admin, max_age=30*86400)
 
+@admin.before_request
 @admin.route("/", methods=['GET'])
-@cross_origin()
 def index():
     return render_template("index.html",)
 
 # ----------------------------------SERIES ROUTES-------------------------------
 @admin.route("/series", methods=['POST'])
-@cross_origin()
 def addSeries():
     if request.method == 'POST':
         genre = request.form.get("category")
@@ -47,7 +47,6 @@ def addSeries():
                 return redirect(url_for('admin.index'))
 
 @admin.route("/episode", methods=['POST'])
-@cross_origin()
 def addEpisode():
     if request.method == 'POST':
         genre = request.form.get('category')
@@ -103,12 +102,10 @@ def addEpisode():
 
 # ------------------------MOVIES ROUTES--------------------------------------
 @admin.route('/movie',methods=['GET'])
-@cross_origin()
 def movie():
     return render_template('moviepage.html')
 
 @admin.route('/addmovies', methods=['POST'])
-@cross_origin()
 def add_movies():
     genre = request.form.get("category")
     movie = request.form.get("movie")

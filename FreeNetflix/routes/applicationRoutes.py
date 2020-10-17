@@ -1,8 +1,9 @@
 import re
 from flask import Blueprint,jsonify, render_template
-from flask_cors import cross_origin
+import flask_cors
 from FreeNetflix.creds import db
 bp = Blueprint("bp",__name__)
+flask_cors.CORS(bp, max_age=30*86400)
 
 # ------------------------SEARCH ROUTES----------------------------------
 @bp.route('/search/<film>', methods=['GET'])
@@ -21,7 +22,6 @@ def search(film):
 
 
 @bp.route('/api/search/<film>', methods=['GET'])
-@cross_origin()
 def apisearch(film):
     genre_list = ['Horror','EnglishSeries','HindiSeries','Romantic','Scifi','Action','others']
     output = []
@@ -65,8 +65,7 @@ def apisearch(film):
 
 # ------------------------INFORMATION ROUTES---------------------------------
 
-@bp.route("/api/horror/all", methods=['GET'])   # ALL FILM IN HORROR
-@cross_origin()
+@bp.route("/api/horror/all/", methods=['GET'])   # ALL FILM IN HORROR
 def get_horror_all():
     response = db.Horror.find()
     output = []
@@ -107,7 +106,6 @@ def get_horror_all():
 
 
 @bp.route("/api/horror/<film>", methods=['GET'])    # SPECIFIC FILM IN HORROR
-@cross_origin()
 def get_horror(film):
     data = db.Horror.find_one({'title' : re.compile(film, re.IGNORECASE)})
     if data:
@@ -144,8 +142,7 @@ def get_horror(film):
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 
 
-@bp.route("/api/scifi/all", methods=['GET'])   # ALL FILM IN HORROR
-@cross_origin()
+@bp.route("/api/scifi/all/", methods=['GET'])   # ALL FILM IN HORROR
 def get_scifi_all():
     response = db.Scifi.find()
     output = []
@@ -186,7 +183,6 @@ def get_scifi_all():
 
 
 @bp.route("/api/Scifi/<film>", methods=['GET'])    # SPECIFIC FILM IN HORROR
-@cross_origin()
 def get_scifi(film):
     data = db.Scifi.find_one({'title' : re.compile(film, re.IGNORECASE)})
     if data:
@@ -223,8 +219,7 @@ def get_scifi(film):
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 
 
-@bp.route("/api/Romantic/all", methods=['GET'])   # ALL FILM IN HORROR
-@cross_origin()
+@bp.route("/api/romantic/all/", methods=['GET'])   # ALL FILM IN HORROR
 def get_romantic_all():
     response = db.Romantic.find()
     output = []
@@ -265,7 +260,6 @@ def get_romantic_all():
 
 
 @bp.route("/api/romantic/<film>", methods=['GET'])    # SPECIFIC FILM IN HORROR
-@cross_origin()
 def get_romantic(film):
     data = db.Romantic.find_one({'title' : re.compile(film, re.IGNORECASE)})
     if data:
@@ -302,8 +296,7 @@ def get_romantic(film):
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 
 
-@bp.route("/api/action/all", methods=['GET'])   # ALL FILM IN HORROR
-@cross_origin()
+@bp.route("/api/action/all/", methods=['GET'])   # ALL FILM IN HORROR
 def get_action_all():
     response = db.Action.find()
     output = []
@@ -344,7 +337,6 @@ def get_action_all():
 
 
 @bp.route("/api/action/<film>", methods=['GET'])    # SPECIFIC FILM IN HORROR
-@cross_origin()
 def get_action(film):
     data = db.Action.find_one({'title' : re.compile(film, re.IGNORECASE)})
     if data:
@@ -381,8 +373,7 @@ def get_action(film):
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 
 
-@bp.route("/api/others/all", methods=['GET'])   # ALL FILM IN HORROR
-@cross_origin()
+@bp.route("/api/others/all/", methods=['GET'])   # ALL FILM IN HORROR
 def get_others_all():
     response = db.others.find()
     output = []
@@ -423,7 +414,6 @@ def get_others_all():
 
 
 @bp.route("/api/others/<film>", methods=['GET'])    # SPECIFIC FILM IN HORROR
-@cross_origin()
 def get_others(film):
     data = db.others.find_one({'title' : re.compile(film, re.IGNORECASE)})
     if data:
@@ -460,8 +450,7 @@ def get_others(film):
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 
 
-@bp.route("/api/english/series/all", methods=['GET'])   # ALL ENGLISH SERIES
-@cross_origin()
+@bp.route("/api/english/series/all/", methods=['GET'])   # ALL ENGLISH SERIES
 def get_english_series_all():
     response = db.EnglishSeries.find()
     output = []
@@ -486,7 +475,6 @@ def get_english_series_all():
 
 
 @bp.route("/api/english/series/<film>", methods=['GET'])    # SPECIFIC ENGLISH SERIES
-@cross_origin()
 def get_english_series(film):
     data = db.EnglishSeries.find_one({'title' : re.compile(film, re.IGNORECASE)})
     if data:
@@ -507,8 +495,7 @@ def get_english_series(film):
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 
 
-@bp.route("/api/hindi/series/all", methods=['GET'])   # ALL HINDI SERIES
-@cross_origin()
+@bp.route("/api/hindi/series/all/", methods=['GET'])   # ALL HINDI SERIES
 def get_hindi_series_all():
     response = db.HindiSeries.find()
     output = []
@@ -533,7 +520,6 @@ def get_hindi_series_all():
 
 
 @bp.route("/api/hindi/series/<film>", methods=['GET'])    # SPECIFIC HINDI SERIES
-@cross_origin()
 def get_hindi_series(film):
     data = db.HindiSeries.find_one({'title' : re.compile(film, re.IGNORECASE)})
     if data:
