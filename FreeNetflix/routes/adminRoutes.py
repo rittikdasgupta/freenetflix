@@ -97,64 +97,6 @@ def addEpisode():
 # ------------------------SERIES ROUTES END----------------------------------
 
 
-# ------------------------SEARCH ROUTES----------------------------------
-@admin.route('/search/<film>', methods=['GET'])
-def search(film):
-    genre_list = ['Horror','EnglishSeries','HindiSeries','Romantic','Scifi','Action','others']
-    poster = ''
-    backdrop = ''
-    for genre in genre_list:
-        genre = db[genre]
-        data = genre.find_one({'title' : re.compile(film, re.IGNORECASE)})
-        if data:
-            poster = data['poster_path']
-            backdrop = data['backdrop_path']
-            return render_template('posterConfirm.html',poster = poster, backdrop = backdrop)
-    return '<h1>Cannot Find Movie/Series</h1>'
-
-@admin.route('/api/search/<film>', methods=['GET'])
-def apisearch(film):
-    genre_list = ['Horror','EnglishSeries','HindiSeries','Romantic','Scifi','Action','others']
-    output = []
-    for genre in genre_list:
-        genre = db[genre]
-        data = genre.find_one({'title' : re.compile(film, re.IGNORECASE)})  # case insensitive matching
-        if data:
-            if data["isSeries"] == True:
-                series_data = {
-                    "unique" : data["unique"],
-                    "tmdb_id" : data["tmdb_id"],
-                    "poster_path" : data["poster_path"],
-                    "backdrop_path" : data["backdrop_path"],
-                    "title" : data["title"],
-                    "overview" : data["overview"],
-                    "vote_average" : data["vote_average"],
-                    "release_date" : data["release_date"],
-                    "season_collection" : data["season_collection"],
-                    "isSeries" : True,
-                    "views" : data["views"]
-                }
-                output.append(series_data)
-            elif data["isSeries"] == False:
-                movies_data = {
-                    "unique" : data["unique"],
-                    "tmdb_id" : data["tmdb_id"],
-                    "poster_path" : data["poster_path"],
-                    "backdrop_path" : data["backdrop_path"],
-                    "title" : data["title"],
-                    "overview" : data["overview"],
-                    "mega_link" : data["mega_link"],
-                    "vote_average" : data["vote_average"],
-                    "release_date" : data["release_date"],
-                    "isSeries" : False,
-                    "views" : data["views"]
-                }
-                output.append(movies_data)
-            return jsonify({'status' : 200,'result' : output})
-    return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
-# ------------------------SEARCH ROUTES END----------------------------------
-
-
 # ------------------------MOVIES ROUTES--------------------------------------
 @admin.route('/movie',methods=['GET'])
 def movie():

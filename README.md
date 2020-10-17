@@ -21,3 +21,18 @@
         "status": 200
     }
   ```
+- Other routes
+  - /api/horror/all
+  - /api/horror/<film>
+  - /api/scifi/all
+  - /api/scifi/<film>
+  - /api/romantic/all
+  - /api/romantic/<film>
+  - /api/action/all
+  - /api/action/<film>
+  - /api/others/all
+  - /api/others/<film>
+  - api/english/series/all
+  - api/english/series/<film>
+  - api/hindi/series/all
+  - api/hindi/series/<film>
