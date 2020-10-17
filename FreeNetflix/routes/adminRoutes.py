@@ -27,8 +27,8 @@ def addSeries():
         else:
             response = requests.get("https://api.themoviedb.org/3/search/tv?api_key=9b62ac1eafaa86d7ad48e61ebb6dcb5b&language=en-US&page=1&query={}&include_adult=false".format(series)).json()
             results = response['results'][0]
-            poster = "https://image.tmdb.org/t/p/w500" + results["poster_path"]
-            backdrop = "https://image.tmdb.org/t/p/w500" + results["backdrop_path"]
+            poster = "https://image.tmdb.org/t/p/original" + results["poster_path"]
+            backdrop = "https://image.tmdb.org/t/p/original" + results["backdrop_path"]
             status = genre.insert_one({
                 "unique" : str(uuid.uuid4()),
                 "tmdb_id" : results["id"],
@@ -114,8 +114,8 @@ def add_movies():
     if response:
         genre = db[genre]
         results = response['results'][0]
-        poster = "https://image.tmdb.org/t/p/w500" + results["poster_path"]
-        backdrop = "https://image.tmdb.org/t/p/w500" + results["backdrop_path"]
+        poster = "https://image.tmdb.org/t/p/original" + results["poster_path"]
+        backdrop = "https://image.tmdb.org/t/p/original" + results["backdrop_path"]
         status = genre.insert_one({
             "unique" : str(uuid.uuid4()),
             "tmdb_id" : results["id"],
