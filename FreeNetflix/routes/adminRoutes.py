@@ -100,7 +100,7 @@ def addEpisode():
 # ------------------------SEARCH ROUTES----------------------------------
 @admin.route('/search/<film>', methods=['GET'])
 def search(film):
-    genre_list = db.collection_names()
+    genre_list = ['Horror','EnglishSeries','HindiSeries','Romantic','Scifi','Action','others']
     poster = ''
     backdrop = ''
     for genre in genre_list:
@@ -114,7 +114,8 @@ def search(film):
 
 @admin.route('/api/search/<film>', methods=['GET'])
 def apisearch(film):
-    genre_list = db.collection_names()
+    genre_list = ['Horror','EnglishSeries','HindiSeries','Romantic','Scifi','Action','others']
+    output = []
     for genre in genre_list:
         genre = db[genre]
         data = genre.find_one({'title' : re.compile(film, re.IGNORECASE)})  # case insensitive matching
@@ -133,7 +134,7 @@ def apisearch(film):
                     "isSeries" : True,
                     "views" : data["views"]
                 }
-                return jsonify({'data' : series_data, 'status' : 200})
+                output.append(series_data)
             elif data["isSeries"] == False:
                 movies_data = {
                     "unique" : data["unique"],
@@ -142,12 +143,14 @@ def apisearch(film):
                     "backdrop_path" : data["backdrop_path"],
                     "title" : data["title"],
                     "overview" : data["overview"],
+                    "mega_link" : data["mega_link"],
                     "vote_average" : data["vote_average"],
                     "release_date" : data["release_date"],
                     "isSeries" : False,
                     "views" : data["views"]
                 }
-                return jsonify({'data' : movies_data, 'status' : 200})
+                output.append(movies_data)
+            return jsonify({'status' : 200,'result' : output})
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 # ------------------------SEARCH ROUTES END----------------------------------
 
@@ -161,6 +164,7 @@ def movie():
 def add_movies():
     genre = request.form.get("category")
     movie = request.form.get("movie")
+    mega = request.form.get("mega")
     response = requests.get("https://api.themoviedb.org/3/search/movie?api_key=9b62ac1eafaa86d7ad48e61ebb6dcb5b&language=en-US&query={}&page=1&include_adult=false".format(movie)).json()
     if response:
         genre = db[genre]
@@ -174,6 +178,7 @@ def add_movies():
             "backdrop_path" : backdrop,
             "title" : results["title"],
             "overview" : results["overview"],
+            "mega_link" : mega,
             "vote_average" : results['vote_average'],
             "release_date" : results["release_date"],
             "isSeries" : False,
