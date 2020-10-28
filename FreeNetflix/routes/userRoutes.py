@@ -1,12 +1,10 @@
 import uuid
 from FreeNetflix.creds import db
 from flask import Flask, Blueprint, render_template, request, jsonify
-import flask_cors
 from passlib.hash import pbkdf2_sha256
 bp = Blueprint("netflix", __name__)
-flask_cors.CORS(bp, max_age=30*86400)
+
 # ADD USER
-@bp.before_request
 @bp.route("/user/account",methods=['POST'])
 def SignUp():
     if request.method == 'POST':

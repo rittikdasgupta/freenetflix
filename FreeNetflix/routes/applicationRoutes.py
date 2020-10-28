@@ -1,9 +1,7 @@
 import re
 from flask import Blueprint,jsonify, render_template
-import flask_cors
 from FreeNetflix.creds import db
 bp = Blueprint("bp",__name__)
-flask_cors.CORS(bp, max_age=30*86400)
 
 # ------------------------SEARCH ROUTES----------------------------------
 @bp.route('/search/<film>', methods=['GET'])
