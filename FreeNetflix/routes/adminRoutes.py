@@ -23,6 +23,7 @@ def addSeries():
             return redirect(url_for('admin.index'))
         else:
             response = requests.get("https://api.themoviedb.org/3/search/tv?api_key=9b62ac1eafaa86d7ad48e61ebb6dcb5b&language=en-US&page=1&query={}&include_adult=false".format(series)).json()
+            omdb_response = requests.get("http://www.omdbapi.com/?i=tt3896198&apikey=3ae3134c&t={}".format(series)).json()
             results = response['results'][0]
             poster = "https://image.tmdb.org/t/p/original" + results["poster_path"]
             backdrop = "https://image.tmdb.org/t/p/original" + results["backdrop_path"]
@@ -33,8 +34,14 @@ def addSeries():
                 "backdrop_path" : backdrop,
                 "title" : results["name"],
                 "overview" : results["overview"],
-                "vote_average" : results['vote_average'],
                 "release_date" : results["first_air_date"],
+                "Year" : omdb_response["Year"],
+                "Director" : omdb_response["Director"],
+                "Actors" : omdb_response["Actors"],
+                "Genre" : omdb_response["Genre"],
+                "Language" : omdb_response["Language"],
+                "imdbRating" : omdb_response["imdbRating"],
+                "Metascore" : omdb_response["Metascore"],
                 "season_collection" : [],
                 "isSeries" : True,
                 "views" : 0
@@ -108,7 +115,8 @@ def add_movies():
     movie = request.form.get("movie")
     mega = request.form.get("mega")
     response = requests.get("https://api.themoviedb.org/3/search/movie?api_key=9b62ac1eafaa86d7ad48e61ebb6dcb5b&language=en-US&query={}&page=1&include_adult=false".format(movie)).json()
-    if response:
+    omdb_response = requests.get("http://www.omdbapi.com/?i=tt3896198&apikey=3ae3134c&t={}".format(movie)).json()
+    if response and omdb_response:
         genre = db[genre]
         results = response['results'][0]
         poster = "https://image.tmdb.org/t/p/original" + results["poster_path"]
@@ -121,8 +129,14 @@ def add_movies():
             "title" : results["title"],
             "overview" : results["overview"],
             "mega_link" : mega,
-            "vote_average" : results['vote_average'],
-            "release_date" : results["release_date"],
+            "Year" : omdb_response["Year"],
+            "Director" : omdb_response["Director"],
+            "Actors" : omdb_response["Actors"],
+            "Genre" : omdb_response["Genre"],
+            "Language" : omdb_response["Language"],
+            "imdbRating" : omdb_response["imdbRating"],
+            "Metascore" : omdb_response["Metascore"],
+            "Runtime" : omdb_response["Runtime"],           
             "isSeries" : False,
             "views" : 0
         })
