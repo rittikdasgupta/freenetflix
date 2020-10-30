@@ -1,4 +1,6 @@
 import uuid
+import jwt
+import datetime
 from FreeNetflix.creds import db
 from flask import Flask, Blueprint, render_template, request, jsonify
 from passlib.hash import pbkdf2_sha256
@@ -46,5 +48,8 @@ def Login():
                     "myList" : find_user['myList'],
                     "token" : find_user['token']
                 }
-                return jsonify({"status" : 200,"user" : user})
-        return jsonify({"status" : 404, "message" : "login failed"})
+                token = jwt.encode({"bearer" : user, "exp" : datetime.datetime.utcnow() + datetime.timedelta(days=7)}, "DaMNsimPLeSecREtKEy")
+                print(token)
+                return jsonify({"status" : 200,"token" : str(token)})
+        print('error')
+        return jsonify({"status" : 404, "message" : "username or password is incorrect"})
