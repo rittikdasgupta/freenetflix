@@ -219,7 +219,7 @@ def get_episodes(ep):
         for data in response:
             all_data = Formatter.EpisodeFormatter(data)
             output.append(all_data)
-            return jsonify({'status' : 200,'result' : all_data})
+        return jsonify({'status' : 200,'result' : all_data})
     return jsonify({'status' : 404, 'message' : 'Episode not found'})
 
 
