@@ -210,9 +210,8 @@ def get_series(film):
         return jsonify({'status' : 200,'result' : all_data})
     return jsonify({'status' : 404, 'message' : 'Movie/Series not found'})
 
-@bp.route("/api/episode/<series>/<season>", methods=['GET'])    # SPECIFIC EPISODE
-def get_episodes(series,season):
-    ep = series + " Season " + season;
+@bp.route("/api/episode/<ep>/", methods=['GET'])    # SPECIFIC EPISODE
+def get_episodes(ep):
     ep=db[ep]
     response = ep.find()
     output = []
