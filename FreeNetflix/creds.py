@@ -1,4 +1,4 @@
 from pymongo import MongoClient
 
-cluster = MongoClient("mongodb+srv://admin:nydqqzuy1324@cluster0.ufhv8.mongodb.net/")
+cluster = MongoClient("mongodb+srv://adminnfx:nydqqzuy1324@cluster0.fglir.mongodb.net/?retryWrites=true&w=majority")
 db = cluster['FreeNetflix']
